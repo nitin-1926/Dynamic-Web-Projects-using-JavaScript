@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title>AJAX</title>
+</head>
+<body>
+	<div>
+		<input id="input"> </input>
+		<button id="btn"> SEARCH </button>
+	</div>
+	<table id="table" border="1">
+
+	</table>
+
+
+</body>
+
+<script>
+	var newUser = document.getElementById("input");
+	var SearchBtn = document.getElementById("btn");
+	var Divadd = document.getElementById("division");
+	var table = document.getElementById("table");
+	SearchBtn.addEventListener("click",function(event)
+																			{
+																				CallAjax();
+																			}
+														);
+	function CallAjax()
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://api.github.com/users?since=1",true);
+
+		xhr.onload = function(){
+		    console.log(xhr.responseText);
+				var response = JSON.parse(xhr.responseText);
+
+				var head=document.createElement("tr");
+				var c1=document.createElement("th");
+				var c2=document.createElement("th");
+				var c3=document.createElement("th");
+
+				c1.innerHTML = "ID";
+				c2.innerHTML = "LOGIN";
+				c3.innerHTML = "URL";
+
+				head.appendChild(c1);
+				head.appendChild(c2);
+				head.appendChild(c3);
+
+				table.appendChild(head);
+
+					 for(var i=0;i<30;i++)
+					 {
+							//console.log(response[i].id);
+							var row1=document.createElement("tr");
+							var col1=document.createElement("td");
+							col1.innerHTML=response[i].id;
+							row1.appendChild(col1);
+
+							var col2=document.createElement("td");
+							col2.innerHTML=response[i].login;
+							row1.appendChild(col2);
+							table.appendChild(row1);
+
+							var col3=document.createElement("td");
+							col3.innerHTML=response[i].url;
+							row1.appendChild(col3);
+							table.appendChild(row1);
+					 }
+		};
+		xhr.send();
+	}
+
+</script>
+</html>
