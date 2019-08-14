@@ -1,0 +1,119 @@
+<html>
+<head>
+	<title>Git Users</title>
+</head>
+<body>
+	<div id="division">
+		
+	</div>
+	<div id="n">
+		
+	</div>
+	<div>
+		<center>
+			<button id="prev"> Previous </button>
+			<button id="next"> Next </button>
+		</center>
+	</div>
+</body>
+<script>
+	var data=[];
+
+	var next = document.getElementById("next");
+	var prev = document.getElementById("prev");
+
+	var Divadd = document.getElementById("division");
+	var Divadd2 = document.getElementById("n");
+
+	CallAjax();
+	var i=0;
+
+	next.addEventListener("click",function(event)
+										{
+
+											var img = document.createElement("img");
+											img.setAttribute("src",data[++i].avatar_url);
+											img.setAttribute("style","width:200px;height:200px;margin-left:45%;");
+											Divadd.innerHTML=" ";
+											Divadd2.innerHTML=" ";
+											var name = document.createElement("p");
+											name.setAttribute("style","margin-left:45%;"); 
+											name.innerHTML= data[i].login;
+											Divadd.appendChild(img);
+											Divadd2.appendChild(name);								}
+										);
+	prev.addEventListener("click",function(event)
+										{
+
+											var img = document.createElement("img");
+											img.setAttribute("src",data[--i].avatar_url);
+											img.setAttribute("style","width:200px;height:200px;margin-left:45%;");
+											Divadd.innerHTML=" ";
+											Divadd2.innerHTML=" ";
+											var name = document.createElement("p");
+											name.setAttribute("style","margin-left:45%;");
+											name.innerHTML = data[i].login;
+											Divadd.appendChild(img);
+											Divadd2.appendChild(name);							}
+										);
+	function CallAjax()
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://api.github.com/users?since=1",true);
+		xhr.onload = function(){
+		    // console.log(xhr.responseText);
+				data = JSON.parse(xhr.responseText);
+				console.log(data);
+
+				var img = document.createElement("img");
+				img.setAttribute("src",data[i].avatar_url);
+				img.setAttribute("style","width:200px;height:200px;margin-left:45%;");
+				var name = document.createElement("p");
+				name.setAttribute("style","margin-left:45%;");
+				name.innerHTML = data[i].login;
+				Divadd.appendChild(img);
+				Divadd2.appendChild(name);
+
+				// var head=document.createElement("tr");
+				// var c1=document.createElement("th");
+				// var c2=document.createElement("th");
+				// var c3=document.createElement("th");
+				// var c4=document.createElement("th");
+				// c1.innerHTML = "ID";
+				// c2.innerHTML = "LOGIN";
+				// c3.innerHTML = "URL";
+				// c4.innerHTML = "IMAGE";
+				// head.appendChild(c1);
+				// head.appendChild(c2);
+				// head.appendChild(c3);
+				// head.appendChild(c4);
+				// table.appendChild(head);
+				// 	 for(var i=0;i<30;i++)
+				// 	 {
+				// 			//console.log(response[i].id);
+				// 			var row1=document.createElement("tr");
+				// 			var col1=document.createElement("td");
+				// 			col1.innerHTML=response[i].id;
+				// 			row1.appendChild(col1);
+				// 			var col2=document.createElement("td");
+				// 			col2.innerHTML=response[i].login;
+				// 			row1.appendChild(col2);
+				// 			table.appendChild(row1);
+				// 			var col3=document.createElement("td");
+				// 			col3.innerHTML=response[i].url;
+				// 			row1.appendChild(col3);
+
+				// 			var col4=document.createElement("td");
+				// 			var img = document.createElement("img");
+				// 			img.setAttribute("src",response[i].avatar_url);
+				// 			img.setAttribute("style","width:200px;height:200px;");
+				// 			col4.appendChild(img);
+				// 			row1.appendChild(col4);
+
+				// 			table.appendChild(row1);
+				// 	 }
+		};
+		xhr.send();
+	}
+</script>
+</html>
